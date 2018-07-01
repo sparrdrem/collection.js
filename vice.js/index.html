@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<title>c64js, Commodore 64 emulator written in JavaScript</title>
+		<meta charset="UTF-8" />
+		<!-- build:css css/c64.css -->
+		<link rel="stylesheet" type="text/css" href="css/font-awesome.min.css">
+		<link rel="stylesheet" type="text/css" href="css/font-futura.css">
+		<link rel="stylesheet" type="text/css" href="css/main.css">
+		<link rel="stylesheet" type="text/css" href="css/fork-me-on-github.css">
+		<!-- endbuild -->
+		<!-- build:js js/c64.js -->
+		<script src="js/rom-dump/rom-dump-basic.js"></script>
+		<script src="js/rom-dump/rom-dump-kernel.js"></script>
+		<script src="js/rom-dump/rom-dump-character.js"></script>
+		<script src="js/rom.js"></script>
+		<script src="js/io.js"></script>
+		<script src="js/cpu-memory-manager.js"></script>
+		<script src="js/vic-memory-manager.js"></script>
+		<script src="js/gui/file-load.js"></script>
+		<script src="js/vic-ii-6569.js"></script>
+		<script src="js/ram.js"></script>
+		<script src="js/cia-6526-1.js"></script>
+		<script src="js/cia-6526-2.js"></script>
+		<script src="js/keyboard.js"></script>
+		<script src="js/cpu/cpu-6510.js"></script>
+		<script src="js/utils.js"></script>
+		<script src="js/main.js"></script>
+        <script src="js/sid/jsxcompressor.js"></script>
+        <script src="js/sid/stream.js"></script>
+        <script src="js/sid/jssid.core.js"></script>
+        <script src="js/sid/jssid.tinysid.js"></script>
+        <script src="js/sid/jssid.fastsid.js"></script>
+        <script src="js/sid/jssid.resid.js"></script>
+        <script src="js/sid/sid-mos6581.js"></script>
+        <script src="js/sid/pico.dev.js"></script>
+        <!-- endbuild -->
+	</head>
+	<body>
+		<a class="github-fork-ribbon right-top" href="https://github.com/mborgbrant/c64js" title="Fork me on GitHub">Fork me on GitHub</a>
+
+		<div id="emulatorContainer">
+			<div id="emulatorSize">
+				<div id="screenCanvasFs">
+					<canvas id="screenCanvas" width="384" height="272" onclick="main.exitFullscreen()"></canvas>
+				</div>
+			</div>
+			<div id="controlPanel">
+				<i class="fa fa-power-off fa-fw link-pointer" onclick="mos6510.reset();" title="Reset"></i>
+				<i class="fa fa-television fa-fw pull-right link-pointer" onclick="main.fullscreen();" title="Fullscreen mode"></i>
+				<i class="fa fa-arrows-alt fa-fw pull-right link-pointer" onclick="main.zoom(this);" title="Zoom 2x"></i>
+			</div>
+		</div>
+
+		<div class="general-info">
+			<p>
+				<strong>Note: </strong>Right now this is more of a proof of concept than a fully working emulator. Still there are features that are not even emulated, such as the SID chip (for sound), and some of the graphical modes in the VIC-II chip.
+			</p>
+			<p>
+				It is possible to execute rom files in .prg format. In order to do so, drop them on the emulators canvas area above. However, due to the fact that not every feature of the original hardware is implemented yet, not all roms will be executing flawlessly.
+			</p>
+			<p>
+				If you want to try out a game running through this emulator, check out SoS fantastic implementation of Flappy birds for C64. It can be found <a href="http://sos.gd/flappy64/">here</a>.
+			</p>
+		</div>
+
+		<div class="copyrightInfo">
+			&copy; 2015 - 2016, Mikael Borgbrant, www.c64js.com.
+		</div>
+
+		<input type="file" id="fileElement" name="romFile" />
+		<script>
+			window.onload = function() {
+				vic2.setScreenCanvas(document.getElementById('screenCanvas'));
+				fileLoad.setDropArea(document.getElementById('screenCanvas'));
+				main.start();
+			}
+		</script>
+		<script>
+			(function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+				(i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+				m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+				})(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+
+				ga('create', 'UA-75831852-1', 'auto');
+				ga('send', 'pageview');
+		</script>
+	</body>
+</html>
